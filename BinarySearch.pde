@@ -1,3 +1,15 @@
+public class Item
+{
+    private int myCatNum, myInventory;
+    public Item(int nNum, int nInv)
+    {
+        myCatNum = nNum;
+        myInventory = nInv;
+    }
+    public int getCatNum(){return myCatNum;}
+    public int getInventory(){return myInventory;}
+}
+
 private Item[] store = 
 {
   new Item(184, 14), 
@@ -23,22 +35,62 @@ private Item[] store =
 };                             
 public int linearSearch(int catNumToFind)
 {
-  //complete this method
+  for(int i = 0; i < store.length; i++){
+    if(store[i].getCatNum() == catNumToFind){
+      return store[i].getInventory();
+    }
+  }
   return -1;
 }
 public int recursiveLinearSearch(int catNumToFind, int startIndex)
 {
-  //complete this method
-  return -1;
+  if(startIndex == store.length - 1){
+    if(store[startIndex].getCatNum() == catNumToFind){
+      return startIndex;
+    }
+    return -1;
+  }
+  if(store[startIndex].getCatNum() == catNumToFind){
+      return store[startIndex].getInventory();
+    }
+  return recursiveLinearSearch(catNumToFind, startIndex + 1);
 }
 public int binarySearch(int catNumToFind)
 {
-  //complete this method    
+  int high, low, guess;
+  high = store.length - 1;
+  low = 0;
+  guess = (high + low) / 2;
+  while(high >= low){
+    guess = (high + low) / 2;
+    if(store[guess].getCatNum() == catNumToFind){
+      return store[guess].getInventory();
+    }
+    else if(store[guess].getCatNum() < catNumToFind){
+      low = guess + 1;
+    }
+    else
+      high = guess - 1;
+  }
   return -1;
 }
 public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
 {
-  //complete this method    
+  int guess;
+  guess = (nHigh + nLow) / 2;
+  
+  if(store[guess].getCatNum() == catNumToFind){
+    return store[guess].getInventory();
+  }
+  if(nHigh == nLow){
+    return -1;
+  }
+  if(store[guess].getCatNum() < catNumToFind){
+    return recursiveBinarySearch(catNumToFind, guess + 1, nHigh);
+  }
+  if(store[guess].getCatNum() > catNumToFind){
+    return recursiveBinarySearch(catNumToFind, nLow, guess - 1);
+  }
   return -1;
 }
 public void setup()
@@ -94,9 +146,6 @@ public void draw()
 {
   //empty!
 }
-
-
-
 
 
 
